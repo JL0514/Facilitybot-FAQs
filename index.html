@@ -25,7 +25,7 @@
             transition: max-height 0.3s ease-out;
         }
         .accordion-content.open {
-            max-height: 1000px;
+            max-height: 2000px;
             transition: max-height 0.5s ease-in;
         }
         .card-hover {
@@ -89,28 +89,27 @@
             
             <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                 <!-- Service Requests Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-6 text-white">
-                        <h3 class="text-xl font-bold mb-2">Service Requests</h3>
-                        <p class="text-purple-100">Repair & maintenance filing process</p>
-                    </div>
+                <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl shadow-lg overflow-hidden card-hover cursor-pointer text-white" onclick="toggleAccordion('subtenant-service')">
                     <div class="p-6">
-                        <button class="w-full text-left flex justify-between items-center hover:bg-gray-50 transition-colors rounded-lg p-3" onclick="toggleAccordion('subtenant-service')">
-                            <span class="text-gray-700 font-medium">How to file a Service Request?</span>
-                            <svg id="arrow-subtenant-service" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h3 class="text-xl font-bold mb-2">Service Requests</h3>
+                        <p class="text-purple-100 mb-4">Repair & maintenance filing process</p>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">How to file a Service Request?</span>
+                            <svg id="arrow-subtenant-service" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        </button>
+                        </div>
                         
                         <div id="subtenant-service" class="accordion-content">
-                            <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="mt-6 pt-4 border-t border-purple-400">
                                 <div class="space-y-3">
-                                    <div class="bg-blue-50 p-4 rounded-lg">
-                                        <p class="text-gray-700">Go to <strong>Agila Subic Bot → Menu → Service Request → Create Service Request → Select "Service Request."</strong></p>
+                                    <div class="bg-white/20 p-4 rounded-lg">
+                                        <p>Go to <strong>Agila Subic Bot → Menu → Service Request → Create Service Request → Select "Service Request."</strong></p>
                                     </div>
                                     <div class="flex items-start space-x-2">
-                                        <span class="text-blue-500">👉</span>
-                                        <p class="text-gray-600">Use this if you need assistance from our team.</p>
+                                        <span>👉</span>
+                                        <p>Use this if you need assistance from our team.</p>
                                     </div>
                                 </div>
                             </div>
@@ -119,32 +118,31 @@
                 </div>
 
                 <!-- Access Requests Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="bg-gradient-to-r from-cyan-500 to-blue-500 p-6 text-white">
-                        <h3 class="text-xl font-bold mb-2">Access Requests</h3>
-                        <p class="text-cyan-100">Visitor entry & gatepass procedures</p>
-                    </div>
+                <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl shadow-lg overflow-hidden card-hover cursor-pointer text-white" onclick="toggleAccordion('subtenant-access')">
                     <div class="p-6">
-                        <button class="w-full text-left flex justify-between items-center hover:bg-gray-50 transition-colors rounded-lg p-3" onclick="toggleAccordion('subtenant-access')">
-                            <span class="text-gray-700 font-medium">How to file an Access Request?</span>
-                            <svg id="arrow-subtenant-access" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h3 class="text-xl font-bold mb-2">Access Requests</h3>
+                        <p class="text-cyan-100 mb-4">Visitor entry & gatepass procedures</p>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">How to file an Access Request?</span>
+                            <svg id="arrow-subtenant-access" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        </button>
+                        </div>
                         
                         <div id="subtenant-access" class="accordion-content">
-                            <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="mt-6 pt-4 border-t border-cyan-400">
                                 <div class="space-y-3">
-                                    <div class="bg-blue-50 p-4 rounded-lg">
-                                        <p class="text-gray-700">Go to <strong>Agila Subic Bot → Menu → Service Request → Create Service Request → Select "Visitor Entry Request / Delivery."</strong></p>
+                                    <div class="bg-white/20 p-4 rounded-lg">
+                                        <p>Go to <strong>Agila Subic Bot → Menu → Service Request → Create Service Request → Select "Visitor Entry Request / Delivery."</strong></p>
                                     </div>
                                     <div class="flex items-start space-x-2">
-                                        <span class="text-blue-500">👉</span>
-                                        <p class="text-gray-600">This applies to guests, visitors, vendors, suppliers, and contractors.</p>
+                                        <span>👉</span>
+                                        <p>This applies to guests, visitors, vendors, suppliers, and contractors.</p>
                                     </div>
-                                    <div class="bg-yellow-50 p-3 rounded-lg flex items-start space-x-2">
-                                        <span class="text-yellow-600">⚠️</span>
-                                        <p class="text-yellow-700">Make sure to read and follow the instructions to avoid delays at the gate.</p>
+                                    <div class="bg-yellow-200/30 p-3 rounded-lg flex items-start space-x-2">
+                                        <span>⚠️</span>
+                                        <p>Make sure to read and follow the instructions to avoid delays at the gate.</p>
                                     </div>
                                 </div>
                             </div>
@@ -153,36 +151,35 @@
                 </div>
 
                 <!-- Compliance Rules Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="bg-gradient-to-r from-red-500 to-pink-500 p-6 text-white">
-                        <h3 class="text-xl font-bold mb-2">Compliance Rules</h3>
-                        <p class="text-red-100">Essential guidelines to follow</p>
-                    </div>
+                <div class="bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl shadow-lg overflow-hidden card-hover cursor-pointer text-white" onclick="toggleAccordion('subtenant-rules')">
                     <div class="p-6">
-                        <button class="w-full text-left flex justify-between items-center hover:bg-gray-50 transition-colors rounded-lg p-3" onclick="toggleAccordion('subtenant-rules')">
-                            <span class="text-gray-700 font-medium">What rules must I follow?</span>
-                            <svg id="arrow-subtenant-rules" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h3 class="text-xl font-bold mb-2">Compliance Rules</h3>
+                        <p class="text-red-100 mb-4">Essential guidelines to follow</p>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">What rules must I follow?</span>
+                            <svg id="arrow-subtenant-rules" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        </button>
+                        </div>
                         
                         <div id="subtenant-rules" class="accordion-content">
-                            <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="mt-6 pt-4 border-t border-red-400">
                                 <div class="space-y-3">
                                     <div class="flex items-start space-x-3">
-                                        <div class="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                                        <p class="text-gray-600">Always carry a valid Company ID or government-issued ID</p>
+                                        <div class="w-2 h-2 bg-white rounded-full mt-2"></div>
+                                        <p>Always carry a valid Company ID or government-issued ID</p>
                                     </div>
                                     <div class="flex items-start space-x-3">
-                                        <div class="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                                        <p class="text-gray-600">Comply with dress code and wear PPE in operational zones</p>
+                                        <div class="w-2 h-2 bg-white rounded-full mt-2"></div>
+                                        <p>Comply with dress code and wear PPE in operational zones</p>
                                     </div>
                                     <div class="flex items-start space-x-3">
-                                        <div class="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
-                                        <p class="text-gray-600">Use registered plate numbers in requests</p>
+                                        <div class="w-2 h-2 bg-white rounded-full mt-2"></div>
+                                        <p>Use registered plate numbers in requests</p>
                                     </div>
-                                    <div class="bg-red-50 p-3 rounded-lg">
-                                        <p class="text-red-700 font-medium">❌ Any discrepancies = entry denial or delay</p>
+                                    <div class="bg-red-700/50 p-3 rounded-lg">
+                                        <p class="font-medium">❌ Any discrepancies = entry denial or delay</p>
                                     </div>
                                 </div>
                             </div>
@@ -191,28 +188,27 @@
                 </div>
 
                 <!-- Gatepass Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="bg-gradient-to-r from-indigo-500 to-purple-500 p-6 text-white">
-                        <h3 class="text-xl font-bold mb-2">Gatepass Requests</h3>
-                        <p class="text-indigo-100">Pull-out procedures</p>
-                    </div>
+                <div class="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl shadow-lg overflow-hidden card-hover cursor-pointer text-white" onclick="toggleAccordion('subtenant-gatepass')">
                     <div class="p-6">
-                        <button class="w-full text-left flex justify-between items-center hover:bg-gray-50 transition-colors rounded-lg p-3" onclick="toggleAccordion('subtenant-gatepass')">
-                            <span class="text-gray-700 font-medium">How to request a Gatepass for Pull-Out?</span>
-                            <svg id="arrow-subtenant-gatepass" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h3 class="text-xl font-bold mb-2">Gatepass Requests</h3>
+                        <p class="text-indigo-100 mb-4">Pull-out procedures</p>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">How to request a Gatepass for Pull-Out?</span>
+                            <svg id="arrow-subtenant-gatepass" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        </button>
+                        </div>
                         
                         <div id="subtenant-gatepass" class="accordion-content">
-                            <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="mt-6 pt-4 border-t border-indigo-400">
                                 <div class="space-y-3">
-                                    <div class="bg-blue-50 p-4 rounded-lg">
-                                        <p class="text-gray-700">Go to <strong>Agila Subic Bot → Menu → Service Request → Create Service Request → Select "Gatepass for Pull-Out."</strong></p>
+                                    <div class="bg-white/20 p-4 rounded-lg">
+                                        <p>Go to <strong>Agila Subic Bot → Menu → Service Request → Create Service Request → Select "Gatepass for Pull-Out."</strong></p>
                                     </div>
                                     <div class="flex items-start space-x-2">
-                                        <span class="text-blue-500">👉</span>
-                                        <p class="text-gray-600">Ensure that all guidelines are followed; mismatched or incomplete details may cause delays.</p>
+                                        <span>👉</span>
+                                        <p>Ensure that all guidelines are followed; mismatched or incomplete details may cause delays.</p>
                                     </div>
                                 </div>
                             </div>
@@ -221,29 +217,28 @@
                 </div>
 
                 <!-- HSE Induction Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="bg-gradient-to-r from-orange-500 to-red-500 p-6 text-white">
-                        <h3 class="text-xl font-bold mb-2">HSE Induction</h3>
-                        <p class="text-orange-100">Safety training requests</p>
-                    </div>
+                <div class="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl shadow-lg overflow-hidden card-hover cursor-pointer text-white" onclick="toggleAccordion('subtenant-hse')">
                     <div class="p-6">
-                        <button class="w-full text-left flex justify-between items-center hover:bg-gray-50 transition-colors rounded-lg p-3" onclick="toggleAccordion('subtenant-hse')">
-                            <span class="text-gray-700 font-medium">How to request HSE Induction?</span>
-                            <svg id="arrow-subtenant-hse" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h3 class="text-xl font-bold mb-2">HSE Induction</h3>
+                        <p class="text-orange-100 mb-4">Safety training requests</p>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">How to request HSE Induction?</span>
+                            <svg id="arrow-subtenant-hse" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        </button>
+                        </div>
                         
                         <div id="subtenant-hse" class="accordion-content">
-                            <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="mt-6 pt-4 border-t border-orange-400">
                                 <div class="space-y-3">
-                                    <p class="text-gray-600">Required for contractors working on-site, or visitors/vendors who will stay frequently or long-term.</p>
-                                    <div class="bg-blue-50 p-4 rounded-lg">
-                                        <p class="text-gray-700">Go to <strong>Agila Subic Bot → Menu → Service Request → Create Service Request → Select "HSE Induction."</strong></p>
+                                    <p>Required for contractors working on-site, or visitors/vendors who will stay frequently or long-term.</p>
+                                    <div class="bg-white/20 p-4 rounded-lg">
+                                        <p>Go to <strong>Agila Subic Bot → Menu → Service Request → Create Service Request → Select "HSE Induction."</strong></p>
                                     </div>
                                     <div class="flex items-start space-x-2">
-                                        <span class="text-blue-500">👉</span>
-                                        <p class="text-gray-600">Enter all names individually, as this serves as official attendance.</p>
+                                        <span>👉</span>
+                                        <p>Enter all names individually, as this serves as official attendance.</p>
                                     </div>
                                 </div>
                             </div>
@@ -252,23 +247,22 @@
                 </div>
 
                 <!-- Approvals Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="bg-gradient-to-r from-teal-500 to-green-500 p-6 text-white">
-                        <h3 class="text-xl font-bold mb-2">Request Approvals</h3>
-                        <p class="text-teal-100">Who approves what</p>
-                    </div>
+                <div class="bg-gradient-to-r from-teal-500 to-green-500 rounded-2xl shadow-lg overflow-hidden card-hover cursor-pointer text-white" onclick="toggleAccordion('subtenant-approvals')">
                     <div class="p-6">
-                        <button class="w-full text-left flex justify-between items-center hover:bg-gray-50 transition-colors rounded-lg p-3" onclick="toggleAccordion('subtenant-approvals')">
-                            <span class="text-gray-700 font-medium">Who approves my requests?</span>
-                            <svg id="arrow-subtenant-approvals" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h3 class="text-xl font-bold mb-2">Request Approvals</h3>
+                        <p class="text-teal-100 mb-4">Who approves what</p>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Who approves my requests?</span>
+                            <svg id="arrow-subtenant-approvals" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        </button>
+                        </div>
                         
                         <div id="subtenant-approvals" class="accordion-content">
-                            <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="mt-6 pt-4 border-t border-teal-400">
                                 <div class="space-y-3">
-                                    <p class="text-gray-600">Tenant requests are reviewed by <strong>CBRE</strong> and finalized by <strong>AGILA Subic</strong>.</p>
+                                    <p>Tenant requests are reviewed by <strong>CBRE</strong> and finalized by <strong>AGILA Subic</strong>.</p>
                                 </div>
                             </div>
                         </div>
@@ -286,26 +280,25 @@
             
             <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                 <!-- Work Access Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="bg-gradient-to-r from-green-500 to-emerald-500 p-6 text-white">
-                        <h3 class="text-xl font-bold mb-2">Work Access</h3>
-                        <p class="text-green-100">Entry & delivery procedures</p>
-                    </div>
+                <div class="bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl shadow-lg overflow-hidden card-hover cursor-pointer text-white" onclick="toggleAccordion('contractor-access')">
                     <div class="p-6">
-                        <button class="w-full text-left flex justify-between items-center hover:bg-gray-50 transition-colors rounded-lg p-3" onclick="toggleAccordion('contractor-access')">
-                            <span class="text-gray-700 font-medium">How to request access for work?</span>
-                            <svg id="arrow-contractor-access" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h3 class="text-xl font-bold mb-2">Work Access</h3>
+                        <p class="text-green-100 mb-4">Entry & delivery procedures</p>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">How to request access for work?</span>
+                            <svg id="arrow-contractor-access" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        </button>
+                        </div>
                         
                         <div id="contractor-access" class="accordion-content">
-                            <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="mt-6 pt-4 border-t border-green-400">
                                 <div class="space-y-3">
-                                    <p class="text-gray-600">Contractors must be endorsed by the tenant and submit an Access Request via Agila Subic Bot (FacilityBot in Viber).</p>
+                                    <p>Contractors must be endorsed by the tenant and submit an Access Request via Agila Subic Bot (FacilityBot in Viber).</p>
                                     <div class="flex items-start space-x-2">
-                                        <span class="text-blue-500">👉</span>
-                                        <p class="text-gray-600">If you scan the QR code, you may file your own request.</p>
+                                        <span>👉</span>
+                                        <p>If you scan the QR code, you may file your own request.</p>
                                     </div>
                                 </div>
                             </div>
@@ -314,41 +307,40 @@
                 </div>
 
                 <!-- Compliance Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="bg-gradient-to-r from-orange-500 to-red-500 p-6 text-white">
-                        <h3 class="text-xl font-bold mb-2">Compliance</h3>
-                        <p class="text-orange-100">Requirements & procedures</p>
-                    </div>
+                <div class="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl shadow-lg overflow-hidden card-hover cursor-pointer text-white" onclick="toggleAccordion('contractor-compliance')">
                     <div class="p-6">
-                        <button class="w-full text-left flex justify-between items-center hover:bg-gray-50 transition-colors rounded-lg p-3" onclick="toggleAccordion('contractor-compliance')">
-                            <span class="text-gray-700 font-medium">What must I comply with?</span>
-                            <svg id="arrow-contractor-compliance" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h3 class="text-xl font-bold mb-2">Compliance</h3>
+                        <p class="text-orange-100 mb-4">Requirements & procedures</p>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">What must I comply with?</span>
+                            <svg id="arrow-contractor-compliance" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        </button>
+                        </div>
                         
                         <div id="contractor-compliance" class="accordion-content">
-                            <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="mt-6 pt-4 border-t border-orange-400">
                                 <div class="space-y-3">
-                                    <ul class="space-y-2 text-gray-600">
+                                    <ul class="space-y-2">
                                         <li class="flex items-start space-x-2">
-                                            <span class="text-green-500 font-bold">•</span>
+                                            <span>•</span>
                                             <span>Process Visitor Entry Requests and Gatepasses online via FacilityBot</span>
                                         </li>
                                         <li class="flex items-start space-x-2">
-                                            <span class="text-green-500 font-bold">•</span>
+                                            <span>•</span>
                                             <span>Bring valid company or government-issued IDs</span>
                                         </li>
                                         <li class="flex items-start space-x-2">
-                                            <span class="text-green-500 font-bold">•</span>
+                                            <span>•</span>
                                             <span>Undergo security check at gate entry and exit</span>
                                         </li>
                                         <li class="flex items-start space-x-2">
-                                            <span class="text-green-500 font-bold">•</span>
+                                            <span>•</span>
                                             <span>Use only service vehicles; no walking on main road</span>
                                         </li>
                                         <li class="flex items-start space-x-2">
-                                            <span class="text-green-500 font-bold">•</span>
+                                            <span>•</span>
                                             <span>Wear proper attire and observe safety requirements</span>
                                         </li>
                                     </ul>
@@ -359,45 +351,44 @@
                 </div>
 
                 <!-- Key Reminders Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="bg-gradient-to-r from-purple-500 to-indigo-500 p-6 text-white">
-                        <h3 class="text-xl font-bold mb-2">Key Reminders</h3>
-                        <p class="text-purple-100">Important guidelines</p>
-                    </div>
+                <div class="bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl shadow-lg overflow-hidden card-hover cursor-pointer text-white" onclick="toggleAccordion('contractor-reminders')">
                     <div class="p-6">
-                        <button class="w-full text-left flex justify-between items-center hover:bg-gray-50 transition-colors rounded-lg p-3" onclick="toggleAccordion('contractor-reminders')">
-                            <span class="text-gray-700 font-medium">Important Reminders</span>
-                            <svg id="arrow-contractor-reminders" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h3 class="text-xl font-bold mb-2">Key Reminders</h3>
+                        <p class="text-purple-100 mb-4">Important guidelines</p>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Important Reminders</span>
+                            <svg id="arrow-contractor-reminders" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        </button>
+                        </div>
                         
                         <div id="contractor-reminders" class="accordion-content">
-                            <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="mt-6 pt-4 border-t border-purple-400">
                                 <div class="space-y-3">
                                     <div class="flex items-center space-x-3">
-                                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                                            <span class="text-blue-600 font-bold text-sm">1</span>
+                                        <div class="w-6 h-6 bg-white/30 rounded-full flex items-center justify-center">
+                                            <span class="font-bold text-xs">1</span>
                                         </div>
-                                        <p class="text-gray-600">File requests at least 1 day in advance</p>
+                                        <p>File requests at least 1 day in advance</p>
                                     </div>
                                     
                                     <div class="flex items-center space-x-3">
-                                        <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-                                            <span class="text-yellow-600 font-bold text-sm">2</span>
+                                        <div class="w-6 h-6 bg-white/30 rounded-full flex items-center justify-center">
+                                            <span class="font-bold text-xs">2</span>
                                         </div>
-                                        <p class="text-gray-600">Weekend processing is limited - plan early</p>
+                                        <p>Weekend processing is limited - plan early</p>
                                     </div>
                                     
                                     <div class="flex items-center space-x-3">
-                                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                                            <span class="text-green-600 font-bold text-sm">3</span>
+                                        <div class="w-6 h-6 bg-white/30 rounded-full flex items-center justify-center">
+                                            <span class="font-bold text-xs">3</span>
                                         </div>
-                                        <p class="text-gray-600">Keep Case ID copies for gate reference</p>
+                                        <p>Keep Case ID copies for gate reference</p>
                                     </div>
                                     
-                                    <div class="bg-red-50 p-3 rounded-lg mt-4">
-                                        <p class="text-red-700 font-medium">⚠️ Non-compliance may result in delays, penalties, or project blacklisting</p>
+                                    <div class="bg-red-600/50 p-3 rounded-lg mt-4">
+                                        <p class="font-medium">⚠️ Non-compliance may result in delays, penalties, or project blacklisting</p>
                                     </div>
                                 </div>
                             </div>
@@ -405,50 +396,46 @@
                     </div>
                 </div>
 
-                <!-- Additional contractor cards would continue here with similar structure -->
-                <!-- I'll add a few more to match the comprehensive list -->
-
                 <!-- Access Forms Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="bg-gradient-to-r from-blue-500 to-cyan-500 p-6 text-white">
-                        <h3 class="text-xl font-bold mb-2">Access Forms</h3>
-                        <p class="text-blue-100">Filing procedures</p>
-                    </div>
+                <div class="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl shadow-lg overflow-hidden card-hover cursor-pointer text-white" onclick="toggleAccordion('contractor-forms')">
                     <div class="p-6">
-                        <button class="w-full text-left flex justify-between items-center hover:bg-gray-50 transition-colors rounded-lg p-3" onclick="toggleAccordion('contractor-forms')">
-                            <span class="text-gray-700 font-medium">How to file Access Forms?</span>
-                            <svg id="arrow-contractor-forms" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h3 class="text-xl font-bold mb-2">Access Forms</h3>
+                        <p class="text-blue-100 mb-4">Filing procedures</p>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">How to file Access Forms?</span>
+                            <svg id="arrow-contractor-forms" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        </button>
+                        </div>
                         
                         <div id="contractor-forms" class="accordion-content">
-                            <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="mt-6 pt-4 border-t border-blue-400">
                                 <div class="space-y-4">
-                                    <div class="border-l-4 border-blue-500 pl-4">
-                                        <h4 class="font-semibold text-blue-600 mb-2">Visitor Entry Request / Delivery</h4>
-                                        <p class="text-sm text-gray-600 mb-2">Go to Agila Subic Bot → Service Request → Create Service Request → Select "Visitor Entry Request / Delivery."</p>
+                                    <div class="border-l-4 border-white pl-4">
+                                        <h4 class="font-semibold mb-2">Visitor Entry Request / Delivery</h4>
+                                        <p class="text-sm mb-2">Go to Agila Subic Bot → Service Request → Create Service Request → Select "Visitor Entry Request / Delivery."</p>
                                         <div class="flex items-start space-x-2">
-                                            <span class="text-blue-500">👉</span>
-                                            <p class="text-gray-600 text-sm">Applies to vendors, suppliers, contractors, and their workers.</p>
+                                            <span>👉</span>
+                                            <p class="text-sm">Applies to vendors, suppliers, contractors, and their workers.</p>
                                         </div>
                                     </div>
                                     
-                                    <div class="border-l-4 border-green-500 pl-4">
-                                        <h4 class="font-semibold text-green-600 mb-2">Gatepass for Pull-Out</h4>
-                                        <p class="text-sm text-gray-600 mb-2">Go to Agila Subic Bot → Service Request → Create Service Request → Select "Gatepass for Pull-Out."</p>
+                                    <div class="border-l-4 border-white pl-4">
+                                        <h4 class="font-semibold mb-2">Gatepass for Pull-Out</h4>
+                                        <p class="text-sm mb-2">Go to Agila Subic Bot → Service Request → Create Service Request → Select "Gatepass for Pull-Out."</p>
                                         <div class="flex items-start space-x-2">
-                                            <span class="text-blue-500">👉</span>
-                                            <p class="text-gray-600 text-sm">Ensure that all guidelines are followed to avoid delays.</p>
+                                            <span>👉</span>
+                                            <p class="text-sm">Ensure that all guidelines are followed to avoid delays.</p>
                                         </div>
                                     </div>
                                     
-                                    <div class="border-l-4 border-red-500 pl-4">
-                                        <h4 class="font-semibold text-red-600 mb-2">HSE Induction</h4>
-                                        <p class="text-sm text-gray-600 mb-2">Mandatory for contractors working on-site and visitors/vendors staying regularly or long-term.</p>
+                                    <div class="border-l-4 border-white pl-4">
+                                        <h4 class="font-semibold mb-2">HSE Induction</h4>
+                                        <p class="text-sm mb-2">Mandatory for contractors working on-site and visitors/vendors staying regularly or long-term.</p>
                                         <div class="flex items-start space-x-2">
-                                            <span class="text-blue-500">👉</span>
-                                            <p class="text-gray-600 text-sm">Input all participant names--this serves as attendance.</p>
+                                            <span>👉</span>
+                                            <p class="text-sm">Input all participant names--this serves as attendance.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -458,26 +445,25 @@
                 </div>
 
                 <!-- PPE Requirements Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="bg-gradient-to-r from-yellow-500 to-orange-500 p-6 text-white">
-                        <h3 class="text-xl font-bold mb-2">PPE Requirements</h3>
-                        <p class="text-yellow-100">Dress code & safety gear</p>
-                    </div>
+                <div class="bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl shadow-lg overflow-hidden card-hover cursor-pointer text-white" onclick="toggleAccordion('contractor-ppe')">
                     <div class="p-6">
-                        <button class="w-full text-left flex justify-between items-center hover:bg-gray-50 transition-colors rounded-lg p-3" onclick="toggleAccordion('contractor-ppe')">
-                            <span class="text-gray-700 font-medium">Dress code and PPE requirements?</span>
-                            <svg id="arrow-contractor-ppe" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h3 class="text-xl font-bold mb-2">PPE Requirements</h3>
+                        <p class="text-yellow-100 mb-4">Dress code & safety gear</p>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Dress code and PPE requirements?</span>
+                            <svg id="arrow-contractor-ppe" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        </button>
+                        </div>
                         
                         <div id="contractor-ppe" class="accordion-content">
-                            <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="mt-6 pt-4 border-t border-yellow-400">
                                 <div class="space-y-3">
-                                    <p class="text-gray-600">Proper attire and PPE (Personal Protective Equipment) are required.</p>
-                                    <div class="bg-red-50 p-3 rounded-lg flex items-start space-x-2">
-                                        <span class="text-blue-500">👉</span>
-                                        <p class="text-red-700">Non-compliance may result in denied entry.</p>
+                                    <p>Proper attire and PPE (Personal Protective Equipment) are required.</p>
+                                    <div class="bg-red-600/50 p-3 rounded-lg flex items-start space-x-2">
+                                        <span>👉</span>
+                                        <p>Non-compliance may result in denied entry.</p>
                                     </div>
                                 </div>
                             </div>
@@ -486,26 +472,25 @@
                 </div>
 
                 <!-- Equipment & Vehicles Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="bg-gradient-to-r from-indigo-500 to-blue-500 p-6 text-white">
-                        <h3 class="text-xl font-bold mb-2">Equipment & Vehicles</h3>
-                        <p class="text-indigo-100">Bringing tools and vehicles</p>
-                    </div>
+                <div class="bg-gradient-to-r from-indigo-500 to-blue-500 rounded-2xl shadow-lg overflow-hidden card-hover cursor-pointer text-white" onclick="toggleAccordion('contractor-equipment')">
                     <div class="p-6">
-                        <button class="w-full text-left flex justify-between items-center hover:bg-gray-50 transition-colors rounded-lg p-3" onclick="toggleAccordion('contractor-equipment')">
-                            <span class="text-gray-700 font-medium">Can I bring tools, equipment, or vehicles?</span>
-                            <svg id="arrow-contractor-equipment" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h3 class="text-xl font-bold mb-2">Equipment & Vehicles</h3>
+                        <p class="text-indigo-100 mb-4">Bringing tools and vehicles</p>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Can I bring tools, equipment, or vehicles?</span>
+                            <svg id="arrow-contractor-equipment" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                        </button>
+                        </div>
                         
                         <div id="contractor-equipment" class="accordion-content">
-                            <div class="mt-4 pt-4 border-t border-gray-100">
+                            <div class="mt-6 pt-4 border-t border-indigo-400">
                                 <div class="space-y-3">
-                                    <p class="text-gray-600">Yes, but all must be declared in the request form.</p>
-                                    <div class="bg-yellow-50 p-3 rounded-lg flex items-start space-x-2">
-                                        <span class="text-yellow-600">⚠️</span>
-                                        <p class="text-yellow-700">Mismatched or undeclared items/plate numbers may cause gate delays.</p>
+                                    <p>Yes, but all must be declared in the request form.</p>
+                                    <div class="bg-yellow-500/30 p-3 rounded-lg flex items-start space-x-2">
+                                        <span>⚠️</span>
+                                        <p>Mismatched or undeclared items/plate numbers may cause gate delays.</p>
                                     </div>
                                 </div>
                             </div>
@@ -598,7 +583,7 @@
             
             const isOpen = content.classList.contains('open');
             
-            // Toggle current accordion
+            // Toggle only the current accordion (no closing others)
             if (isOpen) {
                 content.classList.remove('open');
                 arrow.style.transform = 'rotate(0deg)';
@@ -625,22 +610,22 @@
             }
             
             // Get all FAQ cards
-            const faqCards = document.querySelectorAll('.bg-white.rounded-2xl.shadow-lg.overflow-hidden.card-hover');
+            const faqCards = document.querySelectorAll('[onclick^="toggleAccordion"]');
             let visibleCount = 0;
             
             faqCards.forEach(card => {
                 const title = card.querySelector('h3');
                 const content = card.querySelector('.accordion-content');
-                const buttonText = card.querySelector('button span');
+                const questionText = card.querySelector('span');
                 
-                if (title && buttonText) {
+                if (title && questionText) {
                     const titleText = title.textContent.toLowerCase();
-                    const buttonTextContent = buttonText.textContent.toLowerCase();
+                    const questionTextContent = questionText.textContent.toLowerCase();
                     const contentText = content ? content.textContent.toLowerCase() : '';
                     
-                    // Check if search term matches title, button text, or content
+                    // Check if search term matches title, question text, or content
                     const matches = titleText.includes(searchTerm) || 
-                                   buttonTextContent.includes(searchTerm) || 
+                                   questionTextContent.includes(searchTerm) || 
                                    contentText.includes(searchTerm);
                     
                     if (searchTerm === '' || matches) {
@@ -680,7 +665,7 @@
             noResults.classList.add('hidden');
             
             // Show all FAQ cards
-            const faqCards = document.querySelectorAll('.bg-white.rounded-2xl.shadow-lg.overflow-hidden.card-hover');
+            const faqCards = document.querySelectorAll('[onclick^="toggleAccordion"]');
             faqCards.forEach(card => {
                 card.style.display = 'block';
             });
