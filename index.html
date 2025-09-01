@@ -23,66 +23,88 @@
             transition: max-height 0.3s ease-out;
         }
         .accordion-content.open {
-            max-height: 2000px;
+            max-height: 1000px;
             transition: max-height 0.5s ease-in;
         }
-        .rotate-180 {
-            transform: rotate(180deg);
+        .card-hover {
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
     </style>
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <!-- Header -->
-        <div class="text-center mb-12 relative">
-            <!-- Dark Mode Toggle -->
-            <div class="absolute top-0 right-0">
-                <button id="darkModeBtn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/80 transition-all duration-300 text-sm font-medium shadow-lg">
-                    <span id="buttonText">🌙 Dark</span>
-                </button>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <!-- Header Section -->
+    <div class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-8 max-w-6xl">
+            <div class="text-center">
+                <h1 class="text-5xl font-bold text-primary mb-4">Agila Subic FAQ</h1>
+                <p class="text-xl text-gray-600 mb-6">Your comprehensive guide to facility requests and procedures</p>
+                <div class="w-32 h-1 bg-gradient-to-r from-primary to-purple-500 mx-auto rounded-full"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-12 max-w-6xl">
+        <!-- Categories Overview -->
+        <div class="grid md:grid-cols-2 gap-6 mb-12">
+            <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+                <div class="flex items-center mb-4">
+                    <div class="text-4xl mr-4">👩‍💼</div>
+                    <h2 class="text-2xl font-bold text-gray-800">For Tenants</h2>
+                </div>
+                <p class="text-gray-600 mb-4">Essential information for facility users and lease holders</p>
+                <div class="flex items-center text-primary font-medium">
+                    <span>5 Key Topics</span>
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </div>
             </div>
             
-            <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">Agila Subic FAQ</h1>
-            <p class="text-lg text-gray-600 dark:text-gray-400 mb-2">Frequently Asked Questions</p>
-            <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
+            <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+                <div class="flex items-center mb-4">
+                    <div class="text-4xl mr-4">🛠️</div>
+                    <h2 class="text-2xl font-bold text-gray-800">For Contractors</h2>
+                </div>
+                <p class="text-gray-600 mb-4">Guidelines for vendors, suppliers, and construction teams</p>
+                <div class="flex items-center text-green-500 font-medium">
+                    <span>9 Key Topics</span>
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </div>
+            </div>
         </div>
 
-        <!-- Subtenants Section -->
-        <div class="mb-12">
-            <h2 class="text-2xl font-bold text-primary mb-6 flex items-center">
-                <span class="w-2 h-8 bg-primary rounded mr-3"></span>
-                For Subtenants
+        <!-- Tenants Section -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center flex items-center justify-center">
+                <span class="text-4xl mr-3">👩‍💼</span>
+                FAQs for Tenants
             </h2>
-            
             <div class="space-y-4">
+                
                 <!-- FAQ 1 -->
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50" onclick="toggleAccordion('subtenant-1')">
-                        <h3 class="text-lg font-semibold pr-4">How do I file a Service Request?</h3>
-                        <svg id="arrow-subtenant-1" class="w-5 h-5 text-gray-500 transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleAccordion('tenant-1')">
+                        <h3 class="text-lg font-semibold text-gray-800">1. How do I file a Service Request?</h3>
+                        <svg id="arrow-tenant-1" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div id="subtenant-1" class="accordion-content">
-                        <div class="px-6 pb-6">
-                            <div class="text-gray-700 dark:text-gray-300 space-y-3">
-                                <p><strong>Go to:</strong> Agila Subic Bot → Menu → Service Request → Create Service Request → Select "Service Request."</p>
-                                
-                                <div>
-                                    <p><strong>This is for:</strong></p>
-                                    <ul class="list-disc pl-6 space-y-1 mt-2">
-                                        <li>Repair & maintenance requests (e.g., electrical, plumbing, aircon, lighting)</li>
-                                        <li>Facility-related issues (e.g., cleanliness, pest control, space concerns)</li>
-                                        <li>General assistance requests</li>
-                                    </ul>
+                    <div id="tenant-1" class="accordion-content">
+                        <div class="px-6 pb-6 border-t border-gray-100">
+                            <div class="pt-4 space-y-3">
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <p class="text-gray-700">Go to <strong>Agila Subic Bot → Menu → Service Request → Create Service Request → Select "Service Request."</strong></p>
                                 </div>
-
-                                <div>
-                                    <p><strong>Timeline:</strong></p>
-                                    <ul class="list-disc pl-6 space-y-1 mt-2">
-                                        <li>File requests at least 1 day in advance to allow for processing and assignment</li>
-                                        <li>For urgent matters, please call the Agila Facility Management Office after filing in the bot for faster action</li>
-                                    </ul>
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-blue-500">👉</span>
+                                    <p class="text-gray-600">Use this if you need assistance from our team.</p>
                                 </div>
                             </div>
                         </div>
@@ -90,104 +112,26 @@
                 </div>
 
                 <!-- FAQ 2 -->
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50" onclick="toggleAccordion('subtenant-2')">
-                        <h3 class="text-lg font-semibold pr-4">How do I file an Access Request?</h3>
-                        <svg id="arrow-subtenant-2" class="w-5 h-5 text-gray-500 transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleAccordion('tenant-2')">
+                        <h3 class="text-lg font-semibold text-gray-800">2. How do I file an Access Request?</h3>
+                        <svg id="arrow-tenant-2" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div id="subtenant-2" class="accordion-content">
-                        <div class="px-6 pb-6">
-                            <div class="text-gray-700 dark:text-gray-300 space-y-6">
-                                <!-- Sub-section a -->
-                                <div>
-                                    <h4 class="font-semibold text-primary mb-3">a. Visitor Entry Request / Delivery</h4>
-                                    <p class="mb-2"><strong>Navigate to:</strong> Agila Subic Bot → Menu → Service Request → Create Service Request → Select "Visitor Entry Request / Delivery."</p>
-                                    
-                                    <div class="mb-3">
-                                        <p><strong>Purpose:</strong></p>
-                                        <ul class="list-disc pl-6 space-y-1 mt-1">
-                                            <li>Guests or visitors (e.g., clients, auditors, business partners)</li>
-                                            <li>Deliveries (documents, office supplies, packages, equipment)</li>
-                                            <li>Vendors, suppliers, or contractors for meetings</li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg mb-3">
-                                        <p><strong>Important:</strong></p>
-                                        <ul class="list-disc pl-6 space-y-1 mt-1 text-sm">
-                                            <li>All visitor details must match actual arrival (name, ID, plate number)</li>
-                                            <li>Mismatched details = delay or possible denial at gate</li>
-                                            <li>Frequent visitors (more than once per week) must attend Safety & Security Induction</li>
-                                        </ul>
-                                    </div>
-
-                                    <div>
-                                        <p><strong>Validity & Processing:</strong></p>
-                                        <ul class="list-disc pl-6 space-y-1 mt-1">
-                                            <li>Valid for 3-7 days depending on request type</li>
-                                            <li>File at least 1 day before intended visit</li>
-                                            <li>Processing of requests is limited during weekends</li>
-                                            <li>Always present the Case ID at the gate for quick verification</li>
-                                        </ul>
-                                    </div>
+                    <div id="tenant-2" class="accordion-content">
+                        <div class="px-6 pb-6 border-t border-gray-100">
+                            <div class="pt-4 space-y-3">
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <p class="text-gray-700">Go to <strong>Agila Subic Bot → Menu → Service Request → Create Service Request → Select "Visitor Entry Request / Delivery."</strong></p>
                                 </div>
-
-                                <!-- Sub-section b -->
-                                <div>
-                                    <h4 class="font-semibold text-primary mb-3">b. Gatepass for Pull-Out</h4>
-                                    <p class="mb-2"><strong>Navigate to:</strong> Agila Subic Bot → Menu → Service Request → Create Service Request → Select "Gatepass for Pull-Out."</p>
-                                    
-                                    <div class="mb-3">
-                                        <p><strong>Purpose:</strong></p>
-                                        <ul class="list-disc pl-6 space-y-1 mt-1">
-                                            <li>Removal of company-owned or personal items, equipment, tools, and materials</li>
-                                            <li>Covers both temporary pull-out (for repair/servicing) and permanent removal</li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg mb-3">
-                                        <p><strong>Schedule:</strong></p>
-                                        <ul class="list-disc pl-6 space-y-1 mt-1 text-sm">
-                                            <li>Monday-Friday: 8:00 AM - 5:00 PM</li>
-                                            <li>Saturday: 8:00 AM - 12:00 NN only</li>
-                                            <li class="text-red-600 dark:text-red-400"><strong>❌ No Pull-Outs allowed on Sundays</strong></li>
-                                        </ul>
-                                    </div>
-
-                                    <div>
-                                        <p><strong>Requirements:</strong></p>
-                                        <ul class="list-disc pl-6 space-y-1 mt-1">
-                                            <li>Proper documentation and approvals from concerned departments</li>
-                                            <li>Clear description of items (serial numbers, quantity, purpose)</li>
-                                            <li>Security has the right to inspect and validate items against approved gatepass</li>
-                                        </ul>
-                                    </div>
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-blue-500">👉</span>
+                                    <p class="text-gray-600">This applies to guests, visitors, vendors, suppliers, and contractors.</p>
                                 </div>
-
-                                <!-- Sub-section c -->
-                                <div>
-                                    <h4 class="font-semibold text-primary mb-3">c. HSE Induction</h4>
-                                    
-                                    <div class="mb-3">
-                                        <p><strong>Mandatory for:</strong></p>
-                                        <ul class="list-disc pl-6 space-y-1 mt-1">
-                                            <li>Contractors working onsite for projects or repairs</li>
-                                            <li>Vendors or service providers with regular presence inside the shipyard</li>
-                                            <li>Visitors engaged in activities that expose them to operational areas</li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <p><strong>Covers:</strong></p>
-                                        <ul class="list-disc pl-6 space-y-1 mt-1">
-                                            <li>Safety protocols, security policies, and emergency response procedures</li>
-                                            <li>PPE usage, restricted areas, and conduct rules</li>
-                                        </ul>
-                                    </div>
-
-                                    <p><strong>How to Request:</strong> File through Agila Subic Bot → Service Request → HSE Induction</p>
+                                <div class="bg-yellow-50 p-3 rounded-lg flex items-start space-x-2">
+                                    <span class="text-yellow-600">⚠️</span>
+                                    <p class="text-yellow-700">Make sure to read and follow the instructions to avoid delays at the gate.</p>
                                 </div>
                             </div>
                         </div>
@@ -195,23 +139,64 @@
                 </div>
 
                 <!-- FAQ 3 -->
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50" onclick="toggleAccordion('subtenant-3')">
-                        <h3 class="text-lg font-semibold pr-4">What rules must I follow as a Subtenant?</h3>
-                        <svg id="arrow-subtenant-3" class="w-5 h-5 text-gray-500 transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleAccordion('tenant-3')">
+                        <h3 class="text-lg font-semibold text-gray-800">3. How do I request a Gatepass for Pull-Out?</h3>
+                        <svg id="arrow-tenant-3" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div id="subtenant-3" class="accordion-content">
-                        <div class="px-6 pb-6">
-                            <div class="text-gray-700 dark:text-gray-300">
-                                <ul class="list-disc pl-6 space-y-2">
-                                    <li>Always carry a valid Company ID or government-issued ID</li>
-                                    <li>Comply with dress code and wear PPE in operational zones</li>
-                                    <li>Vehicles must use the registered plate number in the request</li>
-                                    <li class="text-red-600 dark:text-red-400 font-medium">Any discrepancies (plate mismatch, undeclared visitor, unapproved pull-out) = entry denial or delay</li>
-                                    <li>Follow Agila Subic's security, HSE, and facility rules at all times</li>
-                                </ul>
+                    <div id="tenant-3" class="accordion-content">
+                        <div class="px-6 pb-6 border-t border-gray-100">
+                            <div class="pt-4 space-y-3">
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <p class="text-gray-700">Go to <strong>Agila Subic Bot → Menu → Service Request → Create Service Request → Select "Gatepass for Pull-Out."</strong></p>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-blue-500">👉</span>
+                                    <p class="text-gray-600">Ensure that all guidelines are followed; mismatched or incomplete details may cause delays.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleAccordion('tenant-4')">
+                        <h3 class="text-lg font-semibold text-gray-800">4. How do I request HSE Induction?</h3>
+                        <svg id="arrow-tenant-4" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="tenant-4" class="accordion-content">
+                        <div class="px-6 pb-6 border-t border-gray-100">
+                            <div class="pt-4 space-y-3">
+                                <p class="text-gray-600">Required for contractors working on-site, or visitors/vendors who will stay frequently or long-term.</p>
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <p class="text-gray-700">Go to <strong>Agila Subic Bot → Menu → Service Request → Create Service Request → Select "HSE Induction."</strong></p>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-blue-500">👉</span>
+                                    <p class="text-gray-600">Enter all names individually, as this serves as official attendance.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleAccordion('tenant-5')">
+                        <h3 class="text-lg font-semibold text-gray-800">5. Who approves my requests?</h3>
+                        <svg id="arrow-tenant-5" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="tenant-5" class="accordion-content">
+                        <div class="px-6 pb-6 border-t border-gray-100">
+                            <div class="pt-4">
+                                <p class="text-gray-600">Tenant requests are reviewed by <strong>CBRE</strong> and finalized by <strong>AGILA Subic</strong>.</p>
                             </div>
                         </div>
                     </div>
@@ -219,97 +204,29 @@
             </div>
         </div>
 
-        <!-- Contractors/Vendors/Suppliers Section -->
-        <div class="mb-12">
-            <h2 class="text-2xl font-bold text-primary mb-6 flex items-center">
-                <span class="w-2 h-8 bg-primary rounded mr-3"></span>
-                For Contractors / Vendors / Suppliers
+        <!-- Contractors Section -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center flex items-center justify-center">
+                <span class="text-4xl mr-3">🛠️</span>
+                FAQs for Contractors / Vendors
             </h2>
-            
             <div class="space-y-4">
+                
                 <!-- FAQ 1 -->
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50" onclick="toggleAccordion('contractor-1')">
-                        <h3 class="text-lg font-semibold pr-4">How do I file a Work or Access Request?</h3>
-                        <svg id="arrow-contractor-1" class="w-5 h-5 text-gray-500 transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleAccordion('contractor-1')">
+                        <h3 class="text-lg font-semibold text-gray-800">1. How do I request access for work?</h3>
+                        <svg id="arrow-contractor-1" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div id="contractor-1" class="accordion-content">
-                        <div class="px-6 pb-6">
-                            <div class="text-gray-700 dark:text-gray-300 space-y-6">
-                                <!-- Sub-section a -->
-                                <div>
-                                    <h4 class="font-semibold text-primary mb-3">a. Visitor Entry Request / Delivery</h4>
-                                    <p class="mb-2"><strong>Go to:</strong> Agila Subic Bot → Menu → Service Request → Create Service Request → Select "Visitor Entry Request / Delivery."</p>
-                                    
-                                    <div class="mb-3">
-                                        <p><strong>Applies to:</strong></p>
-                                        <ul class="list-disc pl-6 space-y-1 mt-1">
-                                            <li>Contractors mobilizing manpower for work</li>
-                                            <li>Vendors delivering supplies, tools, or spare parts</li>
-                                            <li>Suppliers entering for meetings or deliveries</li>
-                                        </ul>
-                                    </div>
-
-                                    <p class="text-red-600 dark:text-red-400 font-medium mb-3"><strong>Details must be accurate (names, ID, vehicle plates). Incorrect details will result in delayed or denied entry.</strong></p>
-
-                                    <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                                        <p><strong>Validity & Processing:</strong></p>
-                                        <ul class="list-disc pl-6 space-y-1 mt-1 text-sm">
-                                            <li>Pass valid for 3-7 days</li>
-                                            <li>File at least 1 day in advance</li>
-                                            <li>Frequent entries = mandatory Safety & Security Induction</li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <!-- Sub-section b -->
-                                <div>
-                                    <h4 class="font-semibold text-primary mb-3">b. Gatepass for Pull-Out</h4>
-                                    <p class="mb-2"><strong>Go to:</strong> Agila Subic Bot → Menu → Service Request → Create Service Request → Select "Gatepass for Pull-Out."</p>
-                                    
-                                    <div class="mb-3">
-                                        <p><strong>For removing:</strong></p>
-                                        <ul class="list-disc pl-6 space-y-1 mt-1">
-                                            <li>Tools, equipment, or spare parts after project completion</li>
-                                            <li>Damaged/defective items for offsite repair</li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg mb-3">
-                                        <p><strong>Schedule:</strong></p>
-                                        <ul class="list-disc pl-6 space-y-1 mt-1 text-sm">
-                                            <li>Monday-Friday: 8:00 AM - 5:00 PM</li>
-                                            <li>Saturday: 8:00 AM - 12:00 NN</li>
-                                            <li class="text-red-600 dark:text-red-400"><strong>❌ No Sunday Pull-Outs</strong></li>
-                                        </ul>
-                                    </div>
-
-                                    <div>
-                                        <p><strong>Requirements:</strong></p>
-                                        <ul class="list-disc pl-6 space-y-1 mt-1">
-                                            <li>Approved gatepass form with complete item details</li>
-                                            <li>Proper supporting documents (delivery receipt, work permit, or project approval)</li>
-                                            <li>Items subject to inspection by Security before exit</li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <!-- Sub-section c -->
-                                <div>
-                                    <h4 class="font-semibold text-primary mb-3">c. HSE Induction (Mandatory)</h4>
-                                    <p class="text-red-600 dark:text-red-400 font-medium mb-3">All contractors, subcontractors, and manpower personnel must undergo HSE Induction before starting work.</p>
-                                    
-                                    <div class="mb-3">
-                                        <p><strong>Covers:</strong></p>
-                                        <ul class="list-disc pl-6 space-y-1 mt-1">
-                                            <li>General site safety, PPE requirements, and emergency protocols</li>
-                                            <li>Security access policies, prohibited acts, and reporting guidelines</li>
-                                        </ul>
-                                    </div>
-
-                                    <p class="text-red-600 dark:text-red-400 font-medium">No induction = no work access allowed.</p>
+                        <div class="px-6 pb-6 border-t border-gray-100">
+                            <div class="pt-4 space-y-3">
+                                <p class="text-gray-600">Contractors must be endorsed by the tenant and submit an Access Request via Agila Subic Bot (FacilityBot in Viber).</p>
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-blue-500">👉</span>
+                                    <p class="text-gray-600">If you scan the QR code, you may file your own request.</p>
                                 </div>
                             </div>
                         </div>
@@ -317,62 +234,191 @@
                 </div>
 
                 <!-- FAQ 2 -->
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50" onclick="toggleAccordion('contractor-2')">
-                        <h3 class="text-lg font-semibold pr-4">Compliance Requirements for Contractors / Vendors</h3>
-                        <svg id="arrow-contractor-2" class="w-5 h-5 text-gray-500 transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleAccordion('contractor-2')">
+                        <h3 class="text-lg font-semibold text-gray-800">2. What must I comply with?</h3>
+                        <svg id="arrow-contractor-2" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div id="contractor-2" class="accordion-content">
-                        <div class="px-6 pb-6">
-                            <div class="text-gray-700 dark:text-gray-300 space-y-4">
-                                <div>
-                                    <h4 class="font-semibold text-green-600 dark:text-green-400 mb-2">Before Work:</h4>
-                                    <ul class="list-disc pl-6 space-y-1">
-                                        <li>Secure all permits (Access, Gatepass, Work Permits)</li>
-                                        <li>Ensure all staff are inducted and registered</li>
-                                        <li>Provide complete PPE for personnel</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-yellow-600 dark:text-yellow-400 mb-2">During Work:</h4>
-                                    <ul class="list-disc pl-6 space-y-1">
-                                        <li>Always wear PPE</li>
-                                        <li>Follow Agila Subic's HSE and security rules</li>
-                                        <li>Cooperate with inspections and monitoring</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-blue-600 dark:text-blue-400 mb-2">After Work:</h4>
-                                    <ul class="list-disc pl-6 space-y-1">
-                                        <li>Clear all work areas</li>
-                                        <li>File Gatepass for removal of tools and equipment</li>
-                                        <li>Return visitor passes and IDs before leaving premises</li>
-                                    </ul>
-                                </div>
+                        <div class="px-6 pb-6 border-t border-gray-100">
+                            <div class="pt-4 space-y-3">
+                                <ul class="space-y-2 text-gray-600">
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-green-500 font-bold">•</span>
+                                        <span>Process Visitor Entry Requests and Gatepasses (Delivery & Pull-Out) online via FacilityBot.</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-green-500 font-bold">•</span>
+                                        <span>Bring valid company or government-issued IDs when entering the shipyard.</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-green-500 font-bold">•</span>
+                                        <span>Undergo frisking/security check at the gate upon entry and exit.</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-green-500 font-bold">•</span>
+                                        <span>Use only service vehicles; walking along the main road is not allowed.</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-green-500 font-bold">•</span>
+                                        <span>Wear proper attire and observe safety requirements.</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- FAQ 3 -->
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50" onclick="toggleAccordion('contractor-3')">
-                        <h3 class="text-lg font-semibold pr-4">Key Reminders</h3>
-                        <svg id="arrow-contractor-3" class="w-5 h-5 text-gray-500 transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleAccordion('contractor-3')">
+                        <h3 class="text-lg font-semibold text-gray-800">3. How do I file Access Forms?</h3>
+                        <svg id="arrow-contractor-3" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     <div id="contractor-3" class="accordion-content">
-                        <div class="px-6 pb-6">
-                            <div class="text-gray-700 dark:text-gray-300">
-                                <ul class="list-disc pl-6 space-y-2">
-                                    <li>File requests ahead of time (at least 1 day)</li>
-                                    <li>Weekend processing is limited, so plan deliveries/pull-outs earlier</li>
-                                    <li>Keep copies of Case ID for reference at the gate</li>
-                                    <li class="text-red-600 dark:text-red-400 font-medium">Non-compliance = possible delays, penalties, or blacklisting from future projects</li>
-                                </ul>
+                        <div class="px-6 pb-6 border-t border-gray-100">
+                            <div class="pt-4 space-y-4">
+                                <div class="border-l-4 border-blue-500 pl-4">
+                                    <h4 class="font-semibold text-blue-600 mb-2">Visitor Entry Request / Delivery</h4>
+                                    <p class="text-sm text-gray-600 mb-2">Go to Agila Subic Bot → Service Request → Create Service Request → Select "Visitor Entry Request / Delivery."</p>
+                                    <div class="flex items-start space-x-2">
+                                        <span class="text-blue-500">👉</span>
+                                        <p class="text-gray-600 text-sm">Applies to vendors, suppliers, contractors, and their workers.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="border-l-4 border-green-500 pl-4">
+                                    <h4 class="font-semibold text-green-600 mb-2">Gatepass for Pull-Out</h4>
+                                    <p class="text-sm text-gray-600 mb-2">Go to Agila Subic Bot → Service Request → Create Service Request → Select "Gatepass for Pull-Out."</p>
+                                    <div class="flex items-start space-x-2">
+                                        <span class="text-blue-500">👉</span>
+                                        <p class="text-gray-600 text-sm">Ensure that all guidelines are followed to avoid delays.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="border-l-4 border-red-500 pl-4">
+                                    <h4 class="font-semibold text-red-600 mb-2">HSE Induction</h4>
+                                    <p class="text-sm text-gray-600 mb-2">Mandatory for contractors working on-site and visitors/vendors staying regularly or long-term.</p>
+                                    <p class="text-sm text-gray-600 mb-2">Go to Agila Subic Bot → Service Request → Create Service Request → Select "HSE Induction."</p>
+                                    <div class="flex items-start space-x-2">
+                                        <span class="text-blue-500">👉</span>
+                                        <p class="text-gray-600 text-sm">Input all participant names--this serves as attendance.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleAccordion('contractor-4')">
+                        <h3 class="text-lg font-semibold text-gray-800">4. What is the dress code and PPE requirement?</h3>
+                        <svg id="arrow-contractor-4" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="contractor-4" class="accordion-content">
+                        <div class="px-6 pb-6 border-t border-gray-100">
+                            <div class="pt-4 space-y-3">
+                                <p class="text-gray-600">Proper attire and PPE (Personal Protective Equipment) are required.</p>
+                                <div class="bg-red-50 p-3 rounded-lg flex items-start space-x-2">
+                                    <span class="text-blue-500">👉</span>
+                                    <p class="text-red-700">Non-compliance may result in denied entry.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleAccordion('contractor-5')">
+                        <h3 class="text-lg font-semibold text-gray-800">5. Can I bring tools, equipment, or vehicles inside?</h3>
+                        <svg id="arrow-contractor-5" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="contractor-5" class="accordion-content">
+                        <div class="px-6 pb-6 border-t border-gray-100">
+                            <div class="pt-4 space-y-3">
+                                <p class="text-gray-600">Yes, but all must be declared in the request form.</p>
+                                <div class="bg-yellow-50 p-3 rounded-lg flex items-start space-x-2">
+                                    <span class="text-yellow-600">⚠️</span>
+                                    <p class="text-yellow-700">Mismatched or undeclared items/plate numbers may cause gate delays.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleAccordion('contractor-6')">
+                        <h3 class="text-lg font-semibold text-gray-800">6. Where are the loading/unloading and parking areas?</h3>
+                        <svg id="arrow-contractor-6" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="contractor-6" class="accordion-content">
+                        <div class="px-6 pb-6 border-t border-gray-100">
+                            <div class="pt-4">
+                                <p class="text-gray-600">Use only the designated areas provided.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 7 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleAccordion('contractor-7')">
+                        <h3 class="text-lg font-semibold text-gray-800">7. Can I extend my approved work schedule?</h3>
+                        <svg id="arrow-contractor-7" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="contractor-7" class="accordion-content">
+                        <div class="px-6 pb-6 border-t border-gray-100">
+                            <div class="pt-4">
+                                <p class="text-gray-600">Extensions require a new request or prior coordination with CBRE/AGILA. Unauthorized extensions are not allowed.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 8 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleAccordion('contractor-8')">
+                        <h3 class="text-lg font-semibold text-gray-800">8. Who approves my request?</h3>
+                        <svg id="arrow-contractor-8" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="contractor-8" class="accordion-content">
+                        <div class="px-6 pb-6 border-t border-gray-100">
+                            <div class="pt-4">
+                                <p class="text-gray-600">All contractor requests go through <strong>FacilityBot → reviewed by CBRE → final approval by AGILA</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 9 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <button class="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors" onclick="toggleAccordion('contractor-9')">
+                        <h3 class="text-lg font-semibold text-gray-800">9. What should I do if my request is denied?</h3>
+                        <svg id="arrow-contractor-9" class="w-5 h-5 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="contractor-9" class="accordion-content">
+                        <div class="px-6 pb-6 border-t border-gray-100">
+                            <div class="pt-4">
+                                <p class="text-gray-600">Check if documents are complete and details match. Correct the issues and re-submit.</p>
                             </div>
                         </div>
                     </div>
@@ -380,53 +426,90 @@
             </div>
         </div>
 
-        <!-- Statistics -->
-        <div class="mt-12 p-6 bg-primary/10 dark:bg-primary/20 rounded-lg text-center">
-            <p class="text-primary font-medium">
-                📊 Total: 6 main questions with detailed sub-sections across 2 categories
-            </p>
+        <!-- Inquiry Section -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center flex items-center justify-center">
+                <span class="text-4xl mr-3">📌</span>
+                Inquiry Section
+            </h2>
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">General Information</h3>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start space-x-2">
+                                <span class="text-blue-500 font-bold">•</span>
+                                <span>Visitor Entry Pass is valid for 3--7 days.</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <span class="text-blue-500 font-bold">•</span>
+                                <span>Requests must be filed at least 1 day in advance.</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <span class="text-blue-500 font-bold">•</span>
+                                <span>Visitors coming more than once a week must undergo Safety & Security Induction.</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <span class="text-blue-500 font-bold">•</span>
+                                <span>Present the Case ID at Security for verification.</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <span class="text-blue-500 font-bold">•</span>
+                                <span>File requests early to avoid delays, especially on weekends when processing is limited.</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <span class="text-blue-500 font-bold">•</span>
+                                <span>For urgent concerns, contact us directly.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Contractors & Subcontractors Schedule</h3>
+                        <div class="space-y-4">
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-green-700 mb-2">Visitor Entry / Delivery</h4>
+                                <p class="text-sm text-green-600">Monday--Saturday, 8:00am -- 5:00pm</p>
+                                <p class="text-red-600 text-sm font-medium">(No Sunday Delivery)</p>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-blue-700 mb-2">Pull-Out of Materials/Equipment</h4>
+                                <ul class="text-sm text-blue-600 space-y-1">
+                                    <li>Monday--Friday, 8:00am -- 5:00pm</li>
+                                    <li>Saturday, 8:00am -- 12nn (Half-day only)</li>
+                                </ul>
+                                <p class="text-red-600 text-sm font-medium mt-2">No Sunday Pull-Out</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Footer -->
-        <div class="text-center mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
-            <p class="text-gray-600 dark:text-gray-400">
-                📞 For more information, contact <strong>Agila Facility Management Office</strong>
-            </p>
+        <!-- Footer Stats Card -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
+            <div class="flex items-center justify-center mb-4">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-800">Complete FAQ Guide</h3>
+                    <p class="text-gray-600">14 comprehensive topics with detailed procedures</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-100 pt-6 mt-6">
+                <p class="text-gray-600">
+                    📞 Need more help? Contact <strong class="text-primary">Agila Facility Management Office</strong>
+                </p>
+            </div>
         </div>
     </div>
 
     <script>
-        // Dark mode functionality
-        let isDarkMode = false;
-
-        function initDarkMode() {
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            
-            if (prefersDark) {
-                isDarkMode = true;
-                document.documentElement.classList.add('dark');
-            }
-            updateDarkModeButton();
-        }
-
-        function toggleDarkMode() {
-            isDarkMode = !isDarkMode;
-            
-            if (isDarkMode) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-            updateDarkModeButton();
-        }
-
-        function updateDarkModeButton() {
-            const buttonText = document.getElementById('buttonText');
-            if (buttonText) {
-                buttonText.textContent = isDarkMode ? '☀️ Light' : '🌙 Dark';
-            }
-        }
-
         // Accordion functionality
         function toggleAccordion(id) {
             const content = document.getElementById(id);
@@ -436,49 +519,15 @@
             
             const isOpen = content.classList.contains('open');
             
-            // Close all other accordions
-            document.querySelectorAll('.accordion-content.open').forEach(el => {
-                if (el.id !== id) {
-                    el.classList.remove('open');
-                    const otherArrow = document.getElementById('arrow-' + el.id);
-                    if (otherArrow) {
-                        otherArrow.classList.remove('rotate-180');
-                    }
-                }
-            });
-            
             // Toggle current accordion
             if (isOpen) {
                 content.classList.remove('open');
-                arrow.classList.remove('rotate-180');
+                arrow.style.transform = 'rotate(0deg)';
             } else {
                 content.classList.add('open');
-                arrow.classList.add('rotate-180');
+                arrow.style.transform = 'rotate(180deg)';
             }
         }
-
-        // Initialize app
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize dark mode
-            initDarkMode();
-            
-            // Dark mode button event
-            const darkModeBtn = document.getElementById('darkModeBtn');
-            if (darkModeBtn) {
-                darkModeBtn.addEventListener('click', toggleDarkMode);
-            }
-            
-            // System theme change listener
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-                isDarkMode = event.matches;
-                if (event.matches) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-                updateDarkModeButton();
-            });
-        });
 
         // Make toggleAccordion globally available
         window.toggleAccordion = toggleAccordion;
