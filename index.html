@@ -35,9 +35,145 @@
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
+        .hse-popup {
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+        .hse-image {
+            max-width: 90vw;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        .progress-bar {
+            transition: width 0.1s linear;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .fade-out {
+            animation: fadeOut 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.95); }
+        }
+        .settings-panel {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .settings-panel.open {
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
+    <!-- HSE Bulletins Popup -->
+    <div id="hsePopup" class="fixed inset-0 bg-black bg-opacity-75 hse-popup hidden flex items-center justify-center">
+        <div class="relative bg-white rounded-lg p-4 max-w-4xl w-full mx-4 fade-in">
+            <!-- Close Button -->
+            <button onclick="closeHSEPopup()" class="absolute top-2 right-2 z-10 bg-red-500 hover:bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+            <!-- Image Container -->
+            <div class="text-center">
+                <img id="hseImage" src="" alt="HSE Bulletin" class="hse-image mx-auto rounded-lg shadow-lg">
+                <div class="mt-4 flex items-center justify-between">
+                    <div class="text-sm text-gray-600">
+                        <span id="currentImageIndex">1</span> of <span id="totalImages">12</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="previousImage()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded text-sm">Previous</button>
+                        <button onclick="toggleAutoAdvance()" id="autoAdvanceBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">Pause</button>
+                        <button onclick="nextImage()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded text-sm">Next</button>
+                    </div>
+                </div>
+                <!-- Progress Bar -->
+                <div class="mt-2 w-full bg-gray-200 rounded-full h-1">
+                    <div id="progressBar" class="bg-blue-500 h-1 rounded-full progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Button (Fixed position) -->
+    <button onclick="openSettings()" class="fixed bottom-4 right-4 bg-gray-600 hover:bg-gray-700 text-white p-3 rounded-full shadow-lg z-50">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+    </button>
+
+    <!-- Settings Panel -->
+    <div id="settingsPanel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-xl settings-panel z-50">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold text-gray-900">Settings</h3>
+                <button onclick="closeSettings()" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Password Section -->
+            <div id="passwordSection" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Enter Password</label>
+                    <input type="password" id="settingsPassword" placeholder="Enter password" class="w-full px-3 py-2 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <button onclick="verifyPassword()" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg">Access Settings</button>
+                <div id="passwordError" class="text-red-500 text-sm hidden">Incorrect password</div>
+            </div>
+
+            <!-- Settings Content (Hidden initially) -->
+            <div id="settingsContent" class="space-y-6 hidden">
+                <div>
+                    <h4 class="font-medium text-gray-900 mb-3">HSE Bulletins Management</h4>
+                    
+                    <!-- Upload Picture File -->
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-gray-700">Upload New HSE Bulletin Picture</label>
+                        <input type="file" id="imageUpload" accept="image/*" class="w-full px-3 py-2 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button onclick="uploadImage()" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg">Upload Picture</button>
+                        <div id="uploadStatus" class="text-sm text-gray-600 hidden"></div>
+                    </div>
+
+                    <!-- Add New Image URL (alternative method) -->
+                    <div class="space-y-3 mt-4 pt-4 border-t border-gray-200">
+                        <label class="block text-sm font-medium text-gray-700">Or Add Image URL</label>
+                        <input type="url" id="newImageUrl" placeholder="https://example.com/image.jpg" class="w-full px-3 py-2 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button onclick="addNewImage()" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg">Add Image URL</button>
+                    </div>
+
+                    <!-- Auto-advance Settings -->
+                    <div class="mt-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Auto-advance Duration (seconds)</label>
+                        <input type="number" id="advanceDuration" value="8" min="3" max="30" class="w-full px-3 py-2 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button onclick="updateDuration()" class="w-full mt-2 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg">Update Duration</button>
+                    </div>
+
+                    <!-- Current Images List -->
+                    <div class="mt-6">
+                        <h5 class="font-medium text-gray-900 mb-2">Current HSE Bulletins</h5>
+                        <div id="imagesList" class="space-y-2 max-h-40 overflow-y-auto">
+                            <!-- Images will be listed here -->
+                        </div>
+                    </div>
+
+                    <!-- Show Popup Button -->
+                    <button onclick="showHSEPopup()" class="w-full bg-purple-500 hover:bg-purple-600 text-white py-2 rounded-lg">Show HSE Bulletins</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Header Section -->
     <div class="bg-white border-b border-gray-200">
         <div class="container mx-auto px-4 py-12 max-w-6xl">
@@ -384,9 +520,6 @@
                     </div>
                 </div>
 
-                <!-- Continue with remaining contractor cards with similar styling pattern... -->
-                <!-- Due to length constraints, I'm showing the pattern for transformation -->
-                
                 <!-- Compliance Card -->
                 <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden card-hover cursor-pointer" onclick="toggleAccordion('contractor-compliance')">
                     <div class="p-6">
@@ -690,6 +823,286 @@
     </div>
 
     <script>
+        // HSE Bulletins System
+        let hseImages = [
+            'https://pfst.cf2.poecdn.net/base/image/d8e19f7723209cbe33dd66b54895f831f6d56326426d5fb947e79fd60fdf5d3f?w=649&h=890',
+            'https://pfst.cf2.poecdn.net/base/image/e3276591bd9f5afb2a4a29fe95e87b209845d18c805f78708bf49c2f05c7b9d2?w=649&h=900',
+            'https://pfst.cf2.poecdn.net/base/image/303685611f751d8f108004910c1e6d5d6fd23ba86e4d333da49751e14eb987a8?w=642&h=894',
+            'https://pfst.cf2.poecdn.net/base/image/c02f9ac4524f260060be5394af6b426a566d5d510d713544e57e35647069a993?w=644&h=885',
+            'https://pfst.cf2.poecdn.net/base/image/5fc7ca9a44cc7e7a786f729c42d8535d73e4fea09131d9d54effa2cac0ecee89?w=637&h=898',
+            'https://pfst.cf2.poecdn.net/base/image/6603313ed2fa69635ad235526c0e1ea7661710e9e1a4e9cac110754a34f69e2f?w=602&h=907',
+            'https://pfst.cf2.poecdn.net/base/image/7bb4ce44837326b3a8b4a98b10bc83d86a70dd3290391aa09a7b5e60fa4a7e55?w=613&h=902',
+            'https://pfst.cf2.poecdn.net/base/image/74f45d411c51d19215145fe04f59c17fcf8b6aa4bfec823494cac54e3157fa3e?w=612&h=892',
+            'https://pfst.cf2.poecdn.net/base/image/6b1ce99cbed59b9cd5aa17fda4f1928b06b445a5823a52bb47b4b8e612176770?w=584&h=905',
+            'https://pfst.cf2.poecdn.net/base/image/4d96e9cab08c5685a2e119402f294606e4bb55db36c7d020124a4c0259dc6b5c?w=565&h=799',
+            'https://pfst.cf2.poecdn.net/base/image/3a63faf7ef53934a69c41c58d615676c936b6539de80749aa890358c22a57feb?w=757&h=862',
+            'https://pfst.cf2.poecdn.net/base/image/ce9c2c0a2a75c7e4bcdbd4fce912a5ffc1bccf1971c9196214494c1ea36c58a4?w=630&h=904'
+        ];
+
+        let currentImageIndex = 0;
+        let autoAdvanceInterval = null;
+        let progressInterval = null;
+        let isAutoAdvancing = true;
+        let advanceDuration = 8; // seconds
+        const settingsPassword = "agila2025"; // Change this to your desired password
+
+        // Show HSE Popup on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                showHSEPopup();
+            }, 2000); // Show after 2 seconds
+        });
+
+        function showHSEPopup() {
+            const popup = document.getElementById('hsePopup');
+            if (hseImages.length === 0) return;
+            
+            popup.classList.remove('hidden');
+            // Start with the latest image (last in array)
+            currentImageIndex = hseImages.length - 1;
+            updateImage();
+            updateImageCounter();
+            
+            if (isAutoAdvancing) {
+                startAutoAdvance();
+            }
+        }
+
+        function closeHSEPopup() {
+            const popup = document.getElementById('hsePopup');
+            popup.classList.add('hidden');
+            stopAutoAdvance();
+        }
+
+        function updateImage() {
+            const imageElement = document.getElementById('hseImage');
+            const progressBar = document.getElementById('progressBar');
+            
+            if (hseImages[currentImageIndex]) {
+                imageElement.src = hseImages[currentImageIndex];
+                progressBar.style.width = '0%';
+            }
+        }
+
+        function updateImageCounter() {
+            document.getElementById('currentImageIndex').textContent = currentImageIndex + 1;
+            document.getElementById('totalImages').textContent = hseImages.length;
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % hseImages.length;
+            updateImage();
+            updateImageCounter();
+            
+            if (isAutoAdvancing) {
+                stopAutoAdvance();
+                startAutoAdvance();
+            }
+        }
+
+        function previousImage() {
+            currentImageIndex = currentImageIndex === 0 ? hseImages.length - 1 : currentImageIndex - 1;
+            updateImage();
+            updateImageCounter();
+            
+            if (isAutoAdvancing) {
+                stopAutoAdvance();
+                startAutoAdvance();
+            }
+        }
+
+        function startAutoAdvance() {
+            stopAutoAdvance();
+            
+            let progress = 0;
+            const progressBar = document.getElementById('progressBar');
+            
+            progressInterval = setInterval(() => {
+                progress += 100 / (advanceDuration * 10);
+                progressBar.style.width = progress + '%';
+            }, 100);
+            
+            autoAdvanceInterval = setTimeout(() => {
+                nextImage();
+                if (isAutoAdvancing) {
+                    startAutoAdvance();
+                }
+            }, advanceDuration * 1000);
+        }
+
+        function stopAutoAdvance() {
+            if (autoAdvanceInterval) {
+                clearTimeout(autoAdvanceInterval);
+                autoAdvanceInterval = null;
+            }
+            if (progressInterval) {
+                clearInterval(progressInterval);
+                progressInterval = null;
+            }
+        }
+
+        function toggleAutoAdvance() {
+            const btn = document.getElementById('autoAdvanceBtn');
+            isAutoAdvancing = !isAutoAdvancing;
+            
+            if (isAutoAdvancing) {
+                btn.textContent = 'Pause';
+                btn.classList.remove('bg-green-500', 'hover:bg-green-600');
+                btn.classList.add('bg-blue-500', 'hover:bg-blue-600');
+                startAutoAdvance();
+            } else {
+                btn.textContent = 'Play';
+                btn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+                btn.classList.add('bg-green-500', 'hover:bg-green-600');
+                stopAutoAdvance();
+            }
+        }
+
+        // Settings Panel Functions
+        function openSettings() {
+            document.getElementById('settingsPanel').classList.add('open');
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsPanel').classList.remove('open');
+            document.getElementById('passwordSection').classList.remove('hidden');
+            document.getElementById('settingsContent').classList.add('hidden');
+            document.getElementById('settingsPassword').value = '';
+            document.getElementById('passwordError').classList.add('hidden');
+        }
+
+        function verifyPassword() {
+            const password = document.getElementById('settingsPassword').value;
+            const errorDiv = document.getElementById('passwordError');
+            
+            if (password === settingsPassword) {
+                document.getElementById('passwordSection').classList.add('hidden');
+                document.getElementById('settingsContent').classList.remove('hidden');
+                updateImagesList();
+                document.getElementById('advanceDuration').value = advanceDuration;
+                errorDiv.classList.add('hidden');
+            } else {
+                errorDiv.classList.remove('hidden');
+                document.getElementById('settingsPassword').value = '';
+            }
+        }
+
+        // Picture Upload Function
+        function uploadImage() {
+            const fileInput = document.getElementById('imageUpload');
+            const statusDiv = document.getElementById('uploadStatus');
+            
+            if (!fileInput.files[0]) {
+                showUploadStatus('Please select an image file.', 'error');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            
+            // Check if it's an image
+            if (!file.type.startsWith('image/')) {
+                showUploadStatus('Please select a valid image file.', 'error');
+                return;
+            }
+            
+            // Check file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showUploadStatus('Image size must be less than 5MB.', 'error');
+                return;
+            }
+            
+            showUploadStatus('Uploading image...', 'loading');
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageDataUrl = e.target.result;
+                // Add to the end of array (newest first in display)
+                hseImages.push(imageDataUrl);
+                fileInput.value = '';
+                updateImagesList();
+                showUploadStatus('Image uploaded successfully!', 'success');
+                
+                // Auto-hide success message after 3 seconds
+                setTimeout(() => {
+                    const statusDiv = document.getElementById('uploadStatus');
+                    statusDiv.classList.add('hidden');
+                }, 3000);
+            };
+            
+            reader.onerror = function() {
+                showUploadStatus('Error reading image file.', 'error');
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        function showUploadStatus(message, type) {
+            const statusDiv = document.getElementById('uploadStatus');
+            statusDiv.classList.remove('hidden');
+            statusDiv.textContent = message;
+            
+            // Remove previous type classes
+            statusDiv.classList.remove('text-red-600', 'text-green-600', 'text-blue-600');
+            
+            if (type === 'error') {
+                statusDiv.classList.add('text-red-600');
+            } else if (type === 'success') {
+                statusDiv.classList.add('text-green-600');
+            } else if (type === 'loading') {
+                statusDiv.classList.add('text-blue-600');
+            }
+        }
+
+        function addNewImage() {
+            const url = document.getElementById('newImageUrl').value.trim();
+            if (url && !hseImages.includes(url)) {
+                hseImages.push(url);
+                document.getElementById('newImageUrl').value = '';
+                updateImagesList();
+            }
+        }
+
+        function removeImage(index) {
+            if (hseImages.length > 1) {
+                hseImages.splice(index, 1);
+                if (currentImageIndex >= hseImages.length) {
+                    currentImageIndex = 0;
+                }
+                updateImagesList();
+                updateImageCounter();
+            }
+        }
+
+        function updateDuration() {
+            const newDuration = parseInt(document.getElementById('advanceDuration').value);
+            if (newDuration >= 3 && newDuration <= 30) {
+                advanceDuration = newDuration;
+                if (isAutoAdvancing && !document.getElementById('hsePopup').classList.contains('hidden')) {
+                    stopAutoAdvance();
+                    startAutoAdvance();
+                }
+            }
+        }
+
+        function updateImagesList() {
+            const list = document.getElementById('imagesList');
+            list.innerHTML = '';
+            
+            hseImages.forEach((url, index) => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center justify-between p-2 bg-gray-50 rounded text-xs';
+                item.innerHTML = `
+                    <span class="truncate flex-1 mr-2">Image ${index + 1}</span>
+                    <button onclick="removeImage(${index})" class="text-red-500 hover:text-red-700 ${hseImages.length <= 1 ? 'opacity-50 cursor-not-allowed' : ''}" ${hseImages.length <= 1 ? 'disabled' : ''}>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                    </button>
+                `;
+                list.appendChild(item);
+            });
+        }
+
         // Accordion functionality
         function toggleAccordion(id) {
             const content = document.getElementById(id);
@@ -699,7 +1112,6 @@
             
             const isOpen = content.classList.contains('open');
             
-            // Toggle only the current accordion (no closing others)
             if (isOpen) {
                 content.classList.remove('open');
                 arrow.style.transform = 'rotate(0deg)';
@@ -718,14 +1130,12 @@
             const noResults = document.getElementById('noResults');
             const resultCount = document.getElementById('resultCount');
             
-            // Show/hide clear button
             if (searchTerm) {
                 clearButton.classList.remove('hidden');
             } else {
                 clearButton.classList.add('hidden');
             }
             
-            // Get all FAQ cards
             const faqCards = document.querySelectorAll('[onclick^="toggleAccordion"]');
             let visibleCount = 0;
             
@@ -739,7 +1149,6 @@
                     const questionTextContent = questionText.textContent.toLowerCase();
                     const contentText = content ? content.textContent.toLowerCase() : '';
                     
-                    // Check if search term matches title, question text, or content
                     const matches = titleText.includes(searchTerm) || 
                                    questionTextContent.includes(searchTerm) || 
                                    contentText.includes(searchTerm);
@@ -753,7 +1162,6 @@
                 }
             });
             
-            // Show/hide search results and no results message
             if (searchTerm) {
                 searchResults.classList.remove('hidden');
                 resultCount.textContent = visibleCount;
@@ -780,7 +1188,6 @@
             searchResults.classList.add('hidden');
             noResults.classList.add('hidden');
             
-            // Show all FAQ cards
             const faqCards = document.querySelectorAll('[onclick^="toggleAccordion"]');
             faqCards.forEach(card => {
                 card.style.display = 'block';
@@ -793,6 +1200,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('searchInput');
             const clearButton = document.getElementById('clearSearch');
+            const settingsPassword = document.getElementById('settingsPassword');
             
             if (searchInput) {
                 searchInput.addEventListener('input', searchFAQs);
@@ -806,12 +1214,32 @@
             if (clearButton) {
                 clearButton.addEventListener('click', clearSearch);
             }
+
+            if (settingsPassword) {
+                settingsPassword.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        verifyPassword();
+                    }
+                });
+            }
         });
 
         // Make functions globally available
         window.toggleAccordion = toggleAccordion;
         window.searchFAQs = searchFAQs;
         window.clearSearch = clearSearch;
+        window.showHSEPopup = showHSEPopup;
+        window.closeHSEPopup = closeHSEPopup;
+        window.nextImage = nextImage;
+        window.previousImage = previousImage;
+        window.toggleAutoAdvance = toggleAutoAdvance;
+        window.openSettings = openSettings;
+        window.closeSettings = closeSettings;
+        window.verifyPassword = verifyPassword;
+        window.addNewImage = addNewImage;
+        window.removeImage = removeImage;
+        window.updateDuration = updateDuration;
+        window.uploadImage = uploadImage;
     </script>
 </body>
 </html>
