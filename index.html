@@ -152,11 +152,39 @@
                         <button onclick="addNewImage()" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg">Add Image URL</button>
                     </div>
 
+                    <!-- Export/Import Section -->
+                    <div class="mt-6 pt-4 border-t border-gray-200">
+                        <h5 class="font-medium text-gray-900 mb-3">Backup & Restore</h5>
+                        <div class="space-y-2">
+                            <button onclick="exportImages()" class="w-full bg-purple-500 hover:bg-purple-600 text-white py-2 rounded-lg text-sm">
+                                📥 Export Images List
+                            </button>
+                            <input type="file" id="importFile" accept=".json" class="hidden" onchange="handleImportFile(this)">
+                            <button onclick="document.getElementById('importFile').click()" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-lg text-sm">
+                                📤 Import Images List
+                            </button>
+                            <button onclick="resetToDefault()" class="w-full bg-gray-500 hover:bg-gray-600 text-white py-2 rounded-lg text-sm">
+                                🔄 Reset to Default
+                            </button>
+                        </div>
+                        <div class="mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded text-xs text-gray-600">
+                            💡 Export your images list to save your uploads. Import to restore them later.
+                        </div>
+                    </div>
+
                     <!-- Auto-advance Settings -->
                     <div class="mt-6">
                         <label class="block text-sm font-medium text-gray-700 mb-2">Auto-advance Duration (seconds)</label>
                         <input type="number" id="advanceDuration" value="8" min="3" max="30" class="w-full px-3 py-2 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <button onclick="updateDuration()" class="w-full mt-2 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg">Update Duration</button>
+                    </div>
+
+                    <!-- Storage Status -->
+                    <div class="mt-4 p-3 rounded-lg" id="storageStatus">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 rounded-full" id="storageIndicator"></div>
+                            <span class="text-xs" id="storageText">Checking storage...</span>
+                        </div>
                     </div>
 
                     <!-- Current Images List -->
@@ -823,8 +851,8 @@
     </div>
 
     <script>
-        // HSE Bulletins System
-        let hseImages = [
+        // HSE Bulletins System with Persistence
+        const defaultImages = [
             'https://pfst.cf2.poecdn.net/base/image/d8e19f7723209cbe33dd66b54895f831f6d56326426d5fb947e79fd60fdf5d3f?w=649&h=890',
             'https://pfst.cf2.poecdn.net/base/image/e3276591bd9f5afb2a4a29fe95e87b209845d18c805f78708bf49c2f05c7b9d2?w=649&h=900',
             'https://pfst.cf2.poecdn.net/base/image/303685611f751d8f108004910c1e6d5d6fd23ba86e4d333da49751e14eb987a8?w=642&h=894',
@@ -839,6 +867,7 @@
             'https://pfst.cf2.poecdn.net/base/image/ce9c2c0a2a75c7e4bcdbd4fce912a5ffc1bccf1971c9196214494c1ea36c58a4?w=630&h=904'
         ];
 
+        let hseImages = [...defaultImages];
         let currentImageIndex = 0;
         let autoAdvanceInterval = null;
         let progressInterval = null;
@@ -846,8 +875,146 @@
         let advanceDuration = 8; // seconds
         const settingsPassword = "agila2025"; // Change this to your desired password
 
+        // Persistence functions
+        function saveImages() {
+            try {
+                localStorage.setItem('agilaHSEImages', JSON.stringify(hseImages));
+                localStorage.setItem('agilaHSESettings', JSON.stringify({ advanceDuration }));
+                localStorage.setItem('agilaHSELastSaved', new Date().toISOString());
+                updateStorageStatus(true);
+                return true;
+            } catch (e) {
+                updateStorageStatus(false);
+                console.log('localStorage not available, using session memory only');
+                return false;
+            }
+        }
+
+        function loadSavedData() {
+            try {
+                const savedImages = localStorage.getItem('agilaHSEImages');
+                const savedSettings = localStorage.getItem('agilaHSESettings');
+                
+                if (savedImages) {
+                    const parsedImages = JSON.parse(savedImages);
+                    if (Array.isArray(parsedImages) && parsedImages.length > 0) {
+                        hseImages = parsedImages;
+                        console.log('Loaded saved HSE images');
+                    }
+                }
+
+                if (savedSettings) {
+                    const settings = JSON.parse(savedSettings);
+                    if (settings.advanceDuration) {
+                        advanceDuration = settings.advanceDuration;
+                    }
+                }
+
+                updateStorageStatus(true);
+                return true;
+            } catch (e) {
+                updateStorageStatus(false);
+                console.log('Could not load saved data, using defaults');
+                return false;
+            }
+        }
+
+        function updateStorageStatus(available) {
+            const statusDiv = document.getElementById('storageStatus');
+            const indicator = document.getElementById('storageIndicator');
+            const text = document.getElementById('storageText');
+            
+            if (available) {
+                statusDiv.className = 'mt-4 p-3 rounded-lg bg-green-50 border border-green-200';
+                indicator.className = 'w-2 h-2 rounded-full bg-green-500';
+                text.textContent = 'Storage available - images will persist';
+                text.className = 'text-xs text-green-600';
+            } else {
+                statusDiv.className = 'mt-4 p-3 rounded-lg bg-orange-50 border border-orange-200';
+                indicator.className = 'w-2 h-2 rounded-full bg-orange-500';
+                text.textContent = 'Session only - use export/import to save images';
+                text.className = 'text-xs text-orange-600';
+            }
+        }
+
+        function exportImages() {
+            const data = {
+                images: hseImages,
+                settings: { advanceDuration },
+                exportDate: new Date().toISOString(),
+                version: '1.0'
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `agila-hse-images-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showUploadStatus('Images list exported successfully!', 'success');
+            setTimeout(() => {
+                const statusDiv = document.getElementById('uploadStatus');
+                statusDiv.classList.add('hidden');
+            }, 3000);
+        }
+
+        function handleImportFile(input) {
+            const file = input.files[0];
+            if (file) {
+                importImages(file);
+                input.value = ''; // Clear the input
+            }
+        }
+
+        function importImages(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.images && Array.isArray(data.images)) {
+                        hseImages = data.images;
+                        if (data.settings && data.settings.advanceDuration) {
+                            advanceDuration = data.settings.advanceDuration;
+                            document.getElementById('advanceDuration').value = advanceDuration;
+                        }
+                        saveImages();
+                        updateImagesList();
+                        showUploadStatus('Images imported successfully!', 'success');
+                        
+                        // Auto-hide success message after 3 seconds
+                        setTimeout(() => {
+                            const statusDiv = document.getElementById('uploadStatus');
+                            statusDiv.classList.add('hidden');
+                        }, 3000);
+                    } else {
+                        showUploadStatus('Invalid import file format.', 'error');
+                    }
+                } catch (error) {
+                    showUploadStatus('Error reading import file.', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function resetToDefault() {
+            hseImages = [...defaultImages];
+            advanceDuration = 8;
+            document.getElementById('advanceDuration').value = advanceDuration;
+            saveImages();
+            updateImagesList();
+            showUploadStatus('Reset to default images successfully!', 'success');
+            
+            setTimeout(() => {
+                const statusDiv = document.getElementById('uploadStatus');
+                statusDiv.classList.add('hidden');
+            }, 3000);
+        }
+
         // Show HSE Popup on page load
         window.addEventListener('load', function() {
+            loadSavedData(); // Load saved data first
             setTimeout(() => {
                 showHSEPopup();
             }, 2000); // Show after 2 seconds
@@ -1019,8 +1186,9 @@
                 // Add to the end of array (newest first in display)
                 hseImages.push(imageDataUrl);
                 fileInput.value = '';
+                saveImages(); // Auto-save after upload
                 updateImagesList();
-                showUploadStatus('Image uploaded successfully!', 'success');
+                showUploadStatus('Image uploaded and saved successfully!', 'success');
                 
                 // Auto-hide success message after 3 seconds
                 setTimeout(() => {
@@ -1058,7 +1226,14 @@
             if (url && !hseImages.includes(url)) {
                 hseImages.push(url);
                 document.getElementById('newImageUrl').value = '';
+                saveImages(); // Auto-save after adding
                 updateImagesList();
+                showUploadStatus('Image URL added and saved successfully!', 'success');
+                
+                setTimeout(() => {
+                    const statusDiv = document.getElementById('uploadStatus');
+                    statusDiv.classList.add('hidden');
+                }, 3000);
             }
         }
 
@@ -1068,8 +1243,15 @@
                 if (currentImageIndex >= hseImages.length) {
                     currentImageIndex = 0;
                 }
+                saveImages(); // Auto-save after removal
                 updateImagesList();
                 updateImageCounter();
+                showUploadStatus('Image removed successfully!', 'success');
+                
+                setTimeout(() => {
+                    const statusDiv = document.getElementById('uploadStatus');
+                    statusDiv.classList.add('hidden');
+                }, 3000);
             }
         }
 
@@ -1077,10 +1259,17 @@
             const newDuration = parseInt(document.getElementById('advanceDuration').value);
             if (newDuration >= 3 && newDuration <= 30) {
                 advanceDuration = newDuration;
+                saveImages(); // Save settings too
                 if (isAutoAdvancing && !document.getElementById('hsePopup').classList.contains('hidden')) {
                     stopAutoAdvance();
                     startAutoAdvance();
                 }
+                showUploadStatus('Duration updated and saved!', 'success');
+                
+                setTimeout(() => {
+                    const statusDiv = document.getElementById('uploadStatus');
+                    statusDiv.classList.add('hidden');
+                }, 3000);
             }
         }
 
@@ -1091,8 +1280,16 @@
             hseImages.forEach((url, index) => {
                 const item = document.createElement('div');
                 item.className = 'flex items-center justify-between p-2 bg-gray-50 rounded text-xs';
+                
+                // Show different indicator for uploaded vs default images
+                const isUploaded = !defaultImages.includes(url);
+                const indicator = isUploaded ? '<span class="text-green-500">📁</span>' : '<span class="text-blue-500">🔗</span>';
+                
                 item.innerHTML = `
-                    <span class="truncate flex-1 mr-2">Image ${index + 1}</span>
+                    <div class="flex items-center space-x-2 flex-1 mr-2">
+                        ${indicator}
+                        <span class="truncate">Image ${index + 1}${isUploaded ? ' (Uploaded)' : ''}</span>
+                    </div>
                     <button onclick="removeImage(${index})" class="text-red-500 hover:text-red-700 ${hseImages.length <= 1 ? 'opacity-50 cursor-not-allowed' : ''}" ${hseImages.length <= 1 ? 'disabled' : ''}>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -1240,6 +1437,10 @@
         window.removeImage = removeImage;
         window.updateDuration = updateDuration;
         window.uploadImage = uploadImage;
+        window.exportImages = exportImages;
+        window.importImages = importImages;
+        window.handleImportFile = handleImportFile;
+        window.resetToDefault = resetToDefault;
     </script>
 </body>
 </html>
