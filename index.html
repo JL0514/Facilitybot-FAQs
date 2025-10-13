@@ -875,48 +875,138 @@
         let advanceDuration = 8; // seconds
         const settingsPassword = "agila2025"; // Change this to your desired password
 
-        // Persistence functions
+        // IndexedDB Database Management
+        let db = null;
+        const DB_NAME = 'AgilaHSEDatabase';
+        const DB_VERSION = 1;
+        const STORE_NAME = 'images';
+
+        function initDatabase() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                
+                request.onerror = () => {
+                    console.log('IndexedDB error:', request.error);
+                    updateStorageStatus(false);
+                    reject(request.error);
+                };
+                
+                request.onsuccess = () => {
+                    db = request.result;
+                    console.log('IndexedDB initialized successfully');
+                    updateStorageStatus(true);
+                    resolve(db);
+                };
+                
+                request.onupgradeneeded = (event) => {
+                    db = event.target.result;
+                    
+                    // Create object store for images
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+                        store.createIndex('timestamp', 'timestamp', { unique: false });
+                    }
+                };
+            });
+        }
+
         function saveImages() {
-            try {
-                localStorage.setItem('agilaHSEImages', JSON.stringify(hseImages));
-                localStorage.setItem('agilaHSESettings', JSON.stringify({ advanceDuration }));
-                localStorage.setItem('agilaHSELastSaved', new Date().toISOString());
-                updateStorageStatus(true);
-                return true;
-            } catch (e) {
-                updateStorageStatus(false);
-                console.log('localStorage not available, using session memory only');
-                return false;
-            }
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    // Fallback to memory only
+                    updateStorageStatus(false);
+                    resolve(false);
+                    return;
+                }
+
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                
+                const data = {
+                    id: 'hse_images_data',
+                    images: hseImages,
+                    settings: { advanceDuration },
+                    timestamp: new Date().toISOString()
+                };
+                
+                const request = store.put(data);
+                
+                request.onsuccess = () => {
+                    console.log('Images saved to IndexedDB');
+                    updateStorageStatus(true);
+                    resolve(true);
+                };
+                
+                request.onerror = () => {
+                    console.log('Error saving to IndexedDB:', request.error);
+                    updateStorageStatus(false);
+                    resolve(false);
+                };
+            });
         }
 
         function loadSavedData() {
-            try {
-                const savedImages = localStorage.getItem('agilaHSEImages');
-                const savedSettings = localStorage.getItem('agilaHSESettings');
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    updateStorageStatus(false);
+                    resolve(false);
+                    return;
+                }
+
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.get('hse_images_data');
                 
-                if (savedImages) {
-                    const parsedImages = JSON.parse(savedImages);
-                    if (Array.isArray(parsedImages) && parsedImages.length > 0) {
-                        hseImages = parsedImages;
-                        console.log('Loaded saved HSE images');
+                request.onsuccess = () => {
+                    const result = request.result;
+                    if (result) {
+                        if (result.images && Array.isArray(result.images) && result.images.length > 0) {
+                            hseImages = result.images;
+                            console.log('Loaded saved HSE images from IndexedDB');
+                        }
+                        
+                        if (result.settings && result.settings.advanceDuration) {
+                            advanceDuration = result.settings.advanceDuration;
+                        }
+                        
+                        updateStorageStatus(true);
+                        resolve(true);
+                    } else {
+                        console.log('No saved data found, using defaults');
+                        updateStorageStatus(true);
+                        resolve(false);
                     }
+                };
+                
+                request.onerror = () => {
+                    console.log('Error loading from IndexedDB:', request.error);
+                    updateStorageStatus(false);
+                    resolve(false);
+                };
+            });
+        }
+
+        function clearSavedData() {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    resolve(false);
+                    return;
                 }
 
-                if (savedSettings) {
-                    const settings = JSON.parse(savedSettings);
-                    if (settings.advanceDuration) {
-                        advanceDuration = settings.advanceDuration;
-                    }
-                }
-
-                updateStorageStatus(true);
-                return true;
-            } catch (e) {
-                updateStorageStatus(false);
-                console.log('Could not load saved data, using defaults');
-                return false;
-            }
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.delete('hse_images_data');
+                
+                request.onsuccess = () => {
+                    console.log('Saved data cleared from IndexedDB');
+                    resolve(true);
+                };
+                
+                request.onerror = () => {
+                    console.log('Error clearing IndexedDB:', request.error);
+                    resolve(false);
+                };
+            });
         }
 
         function updateStorageStatus(available) {
@@ -1012,9 +1102,18 @@
             }, 3000);
         }
 
-        // Show HSE Popup on page load
-        window.addEventListener('load', function() {
-            loadSavedData(); // Load saved data first
+        // Initialize database and load data on page load
+        window.addEventListener('load', async function() {
+            try {
+                // Initialize IndexedDB first
+                await initDatabase();
+                // Then load saved data
+                await loadSavedData();
+            } catch (error) {
+                console.log('Database initialization failed, using session memory only');
+                updateStorageStatus(false);
+            }
+            
             setTimeout(() => {
                 showHSEPopup();
             }, 2000); // Show after 2 seconds
@@ -1155,7 +1254,7 @@
         }
 
         // Picture Upload Function
-        function uploadImage() {
+        async function uploadImage() {
             const fileInput = document.getElementById('imageUpload');
             const statusDiv = document.getElementById('uploadStatus');
             
@@ -1172,23 +1271,30 @@
                 return;
             }
             
-            // Check file size (max 5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                showUploadStatus('Image size must be less than 5MB.', 'error');
+            // Check file size (max 10MB for better support)
+            if (file.size > 10 * 1024 * 1024) {
+                showUploadStatus('Image size must be less than 10MB.', 'error');
                 return;
             }
             
-            showUploadStatus('Uploading image...', 'loading');
+            showUploadStatus('Uploading and saving image...', 'loading');
             
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = async function(e) {
                 const imageDataUrl = e.target.result;
                 // Add to the end of array (newest first in display)
                 hseImages.push(imageDataUrl);
                 fileInput.value = '';
-                saveImages(); // Auto-save after upload
+                
+                // Save to IndexedDB
+                const saved = await saveImages();
                 updateImagesList();
-                showUploadStatus('Image uploaded and saved successfully!', 'success');
+                
+                if (saved) {
+                    showUploadStatus('Image uploaded and saved to local storage!', 'success');
+                } else {
+                    showUploadStatus('Image uploaded (session only - export to save permanently)', 'success');
+                }
                 
                 // Auto-hide success message after 3 seconds
                 setTimeout(() => {
